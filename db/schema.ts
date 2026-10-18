@@ -1,0 +1,5 @@
+import { sqliteTable, text, integer, primaryKey, index } from 'drizzle-orm/sqlite-core';
+export const viewers = sqliteTable('viewers', {ownerId:text('owner_id').notNull(),viewerId:text('viewer_id').notNull(),label:text('label').notNull()},t=>[primaryKey({columns:[t.ownerId,t.viewerId]})]);
+export const rates = sqliteTable('rates', {userId:text('user_id').notNull(),name:text('name').notNull(),amount:integer('amount').notNull(),note:text('note').notNull()},t=>[primaryKey({columns:[t.userId,t.name]})]);
+export const aliases = sqliteTable('aliases', {userId:text('user_id').notNull(),alias:text('alias').notNull(),store:text('store').notNull()},t=>[primaryKey({columns:[t.userId,t.alias]})]);
+export const records = sqliteTable('records', {id:text('id').primaryKey(),userId:text('user_id').notNull(),createdAt:text('created_at').notNull(),fingerprint:text('fingerprint').notNull(),snapshot:text('snapshot').notNull()},t=>[index('records_owner_date').on(t.userId,t.createdAt),index('records_owner_fingerprint').on(t.userId,t.fingerprint)]);
